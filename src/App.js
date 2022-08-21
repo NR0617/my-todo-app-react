@@ -7,14 +7,17 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
     const [todoList, setTodoList] = useState([]);
-    const fetchData = useCallback(() => {
+    // const fetchData = useCallback(() => {
+    //     fetch("http://localhost:3001/todo")
+    //         .then((res) => res.json())
+    //         .then((data) => setTodoList(data));
+    // }, [InputPage, TodoList]);
+
+    useEffect(() => {
+        //fetchData();
         fetch("http://localhost:3001/todo")
             .then((res) => res.json())
             .then((data) => setTodoList(data));
-    }, [todoList]);
-
-    useEffect(() => {
-        fetchData();
     }, []);
 
     return (

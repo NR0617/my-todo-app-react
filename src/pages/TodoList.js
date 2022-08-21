@@ -27,16 +27,6 @@ const Button = styled.button`
 `;
 
 function TodoList({ todoList }) {
-    // const handleClick = function (e, id) {
-    //     const filtered = schedule.filter((el, idx) => el.id !== id);
-    //     setSchedule([...filtered]);
-    // };
-
-    // const [checked, setChecked] = useState(false);
-    // const handleChecked = function () {
-    //     setChecked(!checked);
-    // };
-
     return (
         <MainPage>
             <ScheduleList>

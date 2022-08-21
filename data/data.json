@@ -17,8 +17,8 @@
     {
       "updatedAt": "2022. 8. 17.",
       "checked": "false",
-      "title": "제목 수정하기",
-      "content": "일정 수정하기",
+      "title": "제목 수정",
+      "content": "일정 수정",
       "id": 5
     },
     {
@@ -27,6 +27,13 @@
       "title": "투두리스트",
       "content": "만들기",
       "id": 6
+    },
+    {
+      "updatedAt": "2022. 8. 18.",
+      "checked": "false",
+      "title": "투두투두",
+      "content": "추가",
+      "id": 7
     }
   ]
 }
