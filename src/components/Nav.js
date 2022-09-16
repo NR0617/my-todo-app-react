@@ -5,8 +5,6 @@ const Navbar = styled.div`
     width: 100vw;
     height: 20vh;
     background: #8fa8ff;
-    /* border: 1px solid #000; */
-    /* margin-bottom: 20px; */
     display: flex;
     justify-content: center;
     align-items: center;

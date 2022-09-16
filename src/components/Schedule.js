@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 const Li = styled.li`
-    border: 1px solid blue;
+    border-bottom: 1px solid #8fa8ff;
+    padding: 5px;
     width: 70vw;
     height: 5vw;
     display: flex;
@@ -38,8 +39,11 @@ const Todo = styled.span`
     overflow: hidden;
     text-overflow: ellipsis;
 
-    @media screen and (max-width: 820px) {
+    @media screen and (min-width: 414px) and (max-width: 820px) {
         font-size: 140%;
+    }
+    @media screen and (max-width: 414px) {
+        font-size: 100%;
     }
 `;
 const Button = styled.span`
