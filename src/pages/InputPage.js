@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
 
 const MainPage = styled.div`
-    /* border: 1px solid #000; */
     display: flex;
     justify-content: center;
     align-items: center;
-    //width: 100%;
 `;
 
 const InputContainers = styled.div`
@@ -68,7 +66,7 @@ const ButtonContainer = styled.div`
 
 function InputPage() {
     const { id } = useParams();
-    //console.log(id);
+
     const newSchedule = {
         updatedAt: new Date().toLocaleDateString(),
         checked: "false",
@@ -91,7 +89,7 @@ function InputPage() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newSchedule),
             method: "POST",
-        }).then(() => window.location.reload("/"));
+        }).then(() => window.location.replace("/"));
     };
     const handleUpdateScedule = function () {
         if (

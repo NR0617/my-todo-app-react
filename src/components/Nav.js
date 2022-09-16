@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Navbar = styled.div`
@@ -22,16 +21,9 @@ function Nav() {
     return (
         <Navbar id="nav-body">
             <Title id="title">
-                {/* <img id="logo" src="../logo.png" alt="logo" /> */}
                 <span id="name">TO-DO LIST</span>
             </Title>
-            <div id="menu">
-                {/* <Link to="/">상품리스트</Link> */}
-                {/* <Link to="/shoppingcart">
-                    장바구니
-                    <span id="nav-item-counter">{cartItems.length}</span>
-                </Link> */}
-            </div>
+            <div id="menu"></div>
         </Navbar>
     );
 }

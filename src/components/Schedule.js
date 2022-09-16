@@ -46,6 +46,7 @@ const Todo = styled.span`
 `;
 const Button = styled.span`
     cursor: default;
+    flex-basis: 3rem;
 `;
 
 export default function Schedule({ id, name, todo }) {
@@ -62,6 +63,7 @@ export default function Schedule({ id, name, todo }) {
             method: "DELETE",
         }).then(() => window.location.reload("/"));
     };
+
     return (
         <Li>
             <Checkbox type={"checkbox"} onChange={handleChecked} />
