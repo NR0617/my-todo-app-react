@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
+import TodoList from "./TodoList";
 
 const MainPage = styled.div`
     display: flex;
@@ -64,7 +65,7 @@ const ButtonContainer = styled.div`
     justify-content: space-between;
 `;
 
-function InputPage() {
+function InputPage({ todoList, setTodoList }) {
     const { id } = useParams();
 
     const newSchedule = {
@@ -89,7 +90,9 @@ function InputPage() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newSchedule),
             method: "POST",
-        }).then(() => window.location.replace("/"));
+        })
+            .then((res) => res.json())
+            .then((res) => setTodoList((prev) => [...prev, res]));
     };
     const handleUpdateScedule = function () {
         if (
@@ -102,7 +105,12 @@ function InputPage() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newSchedule),
             method: "PUT",
-        }).then(() => window.location.reload("/"));
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                const arr = todoList.filter((el) => el.id !== res.id);
+                setTodoList([...arr, res]);
+            });
     };
 
     return (

@@ -16,7 +16,6 @@ const Checkbox = styled.input`
 `;
 
 const Name = styled.span`
-    /* border: 1px solid purple; */
     margin-left: 20px;
     font-size: 1.5em;
     flex-basis: 6em;
@@ -31,7 +30,6 @@ const Name = styled.span`
 `;
 
 const Todo = styled.span`
-    /* border: 1px solid black; */
     margin-left: 20px;
     font-size: 1.5em;
     flex-basis: 31em;
@@ -49,24 +47,40 @@ const Button = styled.span`
     flex-basis: 3rem;
 `;
 
-export default function Schedule({ id, name, todo }) {
+export default function Schedule({
+    id,
+    name,
+    todo,
+    setCheckedArr,
+    checkedArr,
+    checked,
+}) {
     const navigate = useNavigate();
     const moveToUpdate = () => {
         navigate(`/input/${id}`);
     };
-    const [isChecked, setIsChecked] = useState(false);
+    const [isChecked, setIsChecked] = useState(checked);
     const handleChecked = () => {
         setIsChecked((prev) => !prev);
+        if (!checkedArr.includes(id)) {
+            setCheckedArr((prev) => [...prev, id]);
+        } else {
+            const arr = checkedArr.filter((el) => el !== id);
+            setCheckedArr([...arr]);
+        }
     };
     const handleDeleteSchedule = () => {
         fetch(`${process.env.REACT_APP_SERVER}/api/todo/${id}`, {
             method: "DELETE",
-        }).then(() => window.location.reload("/"));
+        }).then(() => setCheckedArr((prev) => [...prev]));
     };
-
     return (
         <Li>
-            <Checkbox type={"checkbox"} onChange={handleChecked} />
+            <Checkbox
+                type={"checkbox"}
+                onChange={handleChecked}
+                checked={isChecked}
+            />
             <Name onClick={moveToUpdate} isChecked={isChecked}>
                 {name}
             </Name>

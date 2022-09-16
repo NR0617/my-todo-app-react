@@ -1,18 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Schedule from "../components/Schedule";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const MainPage = styled.div`
-    /* border: 1px solid #000; */
     display: flex;
     justify-content: center;
     align-items: center;
-    //width: 100%;
 `;
 
 const ScheduleList = styled.ul`
-    /* border: 1px solid blue; */
     width: 70vw;
     height: 90vw;
     padding: 0 0 0 0;
@@ -26,19 +23,36 @@ const Button = styled.button`
     font-size: 2em;
 `;
 
-function TodoList({ todoList }) {
+function TodoList({ todoList, checkedArr, setCheckedArr }) {
     return (
         <MainPage>
             <ScheduleList>
                 {todoList.map(function (el) {
-                    return (
-                        <Schedule
-                            key={el.id}
-                            id={el.id}
-                            name={el.title}
-                            todo={el.content}
-                        />
-                    );
+                    if (checkedArr.includes(el.id)) {
+                        return (
+                            <Schedule
+                                key={el.id}
+                                id={el.id}
+                                name={el.title}
+                                todo={el.content}
+                                setCheckedArr={setCheckedArr}
+                                checkedArr={checkedArr}
+                                checked={true}
+                            />
+                        );
+                    } else {
+                        return (
+                            <Schedule
+                                key={el.id}
+                                id={el.id}
+                                name={el.title}
+                                todo={el.content}
+                                setCheckedArr={setCheckedArr}
+                                checkedArr={checkedArr}
+                                checked={false}
+                            />
+                        );
+                    }
                 })}
                 <Link to="/input">
                     <Button>+</Button>
