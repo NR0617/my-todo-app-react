@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link, useParams } from "react-router-dom";
-import TodoList from "./TodoList";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 const MainPage = styled.div`
     display: flex;
@@ -67,6 +66,18 @@ const ButtonContainer = styled.div`
 
 function InputPage({ todoList, setTodoList }) {
     const { id } = useParams();
+    const navigate = useNavigate();
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_SERVER}/api/todo/${id}`)
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(res);
+                setTitle(res.title);
+                setContent(res.content);
+            });
+    }, []);
 
     const newSchedule = {
         updatedAt: new Date().toLocaleDateString(),
@@ -84,6 +95,7 @@ function InputPage({ todoList, setTodoList }) {
             newSchedule.title === undefined ||
             newSchedule.content === undefined
         ) {
+            alert("내용을 입력해주세요");
             return null;
         }
         fetch(`${process.env.REACT_APP_SERVER}/api/todo`, {
@@ -92,27 +104,22 @@ function InputPage({ todoList, setTodoList }) {
             method: "POST",
         })
             .then((res) => res.json())
-            .then((res) => setTodoList((prev) => [...prev, res]));
+            .then((res) => setTodoList((prev) => [...prev, res]))
+            .then(() => navigate("/"));
     };
     const handleUpdateScedule = function () {
-        if (
-            newSchedule.title === undefined ||
-            newSchedule.content === undefined
-        ) {
-            return null;
-        }
         fetch(`${process.env.REACT_APP_SERVER}/api/todo/${id}`, {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newSchedule),
-            method: "PUT",
+            method: "PATCH",
         })
             .then((res) => res.json())
             .then((res) => {
                 const beforeItem = todoList.filter((el) => el.id < res.id);
                 const afterItem = todoList.filter((el) => el.id > res.id);
-
                 setTodoList([...beforeItem, res, ...afterItem]);
-            });
+            })
+            .then(() => navigate("/"));
     };
 
     return (
@@ -124,6 +131,7 @@ function InputPage({ todoList, setTodoList }) {
                         onKeyUp={(e) => {
                             handleTitle(e.target.value);
                         }}
+                        defaultValue={title}
                     />
                 </InputContainer1>
                 <InputContainer2>
@@ -132,22 +140,19 @@ function InputPage({ todoList, setTodoList }) {
                         onKeyUp={(e) => {
                             handleTodo(e.target.value);
                         }}
+                        defaultValue={content}
                     />
                 </InputContainer2>
-                <Link to="/">
-                    <ButtonContainer>
-                        {id === undefined ? (
-                            <Button onClick={handleCreateSchedule}>
-                                입력하기
-                            </Button>
-                        ) : (
-                            <Button onClick={handleUpdateScedule}>
-                                수정하기
-                            </Button>
-                        )}
+                <ButtonContainer>
+                    {id === undefined ? (
+                        <Button onClick={handleCreateSchedule}>입력하기</Button>
+                    ) : (
+                        <Button onClick={handleUpdateScedule}>수정하기</Button>
+                    )}
+                    <Link to="/">
                         <Button>돌아가기</Button>
-                    </ButtonContainer>
-                </Link>
+                    </Link>
+                </ButtonContainer>
             </InputContainers>
         </MainPage>
     );
