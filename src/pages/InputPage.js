@@ -108,8 +108,10 @@ function InputPage({ todoList, setTodoList }) {
         })
             .then((res) => res.json())
             .then((res) => {
-                const arr = todoList.filter((el) => el.id !== res.id);
-                setTodoList([...arr, res]);
+                const beforeItem = todoList.filter((el) => el.id < res.id);
+                const afterItem = todoList.filter((el) => el.id > res.id);
+
+                setTodoList([...beforeItem, res, ...afterItem]);
             });
     };
 
