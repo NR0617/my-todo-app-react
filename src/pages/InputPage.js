@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
 
@@ -22,8 +22,9 @@ const InputContainers = styled.div`
 `;
 
 const Text = styled.span`
-    font-size: 1.5rem;
+    font-size: 100%;
     padding-bottom: 20px;
+    margin-left: 5px;
 `;
 
 const Input = styled.textarea`
@@ -31,6 +32,7 @@ const Input = styled.textarea`
     width: 70%;
     margin-left: 10px;
     font-size: 1.3rem;
+    resize: none;
 `;
 
 const InputContainer1 = styled.div`
@@ -38,11 +40,17 @@ const InputContainer1 = styled.div`
     width: 30rem;
     margin-bottom: 20px;
     margin-top: 20px;
+    @media screen and (max-width: 768px) {
+        width: fit-content;
+    }
 `;
 const InputContainer2 = styled.div`
     display: flex;
     width: 30rem;
     height: 30rem;
+    @media screen and (max-width: 768px) {
+        width: fit-content;
+    }
 `;
 
 const Button = styled.button`
@@ -58,7 +66,7 @@ const ButtonContainer = styled.div`
     justify-content: space-between;
 `;
 
-function InputPage({ todoList }) {
+function InputPage() {
     const { id } = useParams();
     //console.log(id);
     const newSchedule = {
