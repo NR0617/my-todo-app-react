@@ -8,7 +8,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 function App() {
     const [todoList, setTodoList] = useState([]);
     const [checkedArr, setCheckedArr] = useState([]);
-    console.log(checkedArr);
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_SERVER}/api/todo`)
