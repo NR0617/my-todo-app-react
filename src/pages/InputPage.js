@@ -22,7 +22,7 @@ const InputContainers = styled.div`
 `;
 
 const Text = styled.span`
-    font-size: 100%;
+    font-size: 130%;
     padding-bottom: 20px;
     margin-left: 5px;
 `;
@@ -31,7 +31,7 @@ const Input = styled.textarea`
     height: 80%;
     width: 70%;
     margin-left: 10px;
-    font-size: 1.3rem;
+    font-size: 130%;
     resize: none;
 `;
 
