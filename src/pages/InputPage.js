@@ -69,14 +69,15 @@ function InputPage({ todoList, setTodoList }) {
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
         fetch(`${process.env.REACT_APP_SERVER}/api/todo/${id}`)
             .then((res) => res.json())
             .then((res) => {
-                console.log(res);
                 setTitle(res.title);
                 setContent(res.content);
-            });
+            })
+            .then(() => setIsLoading(false));
     }, []);
 
     const newSchedule = {
@@ -124,36 +125,44 @@ function InputPage({ todoList, setTodoList }) {
 
     return (
         <MainPage>
-            <InputContainers>
-                <InputContainer1>
-                    <Text>제목</Text>
-                    <Input
-                        onKeyUp={(e) => {
-                            handleTitle(e.target.value);
-                        }}
-                        defaultValue={title}
-                    />
-                </InputContainer1>
-                <InputContainer2>
-                    <Text>일정</Text>
-                    <Input
-                        onKeyUp={(e) => {
-                            handleTodo(e.target.value);
-                        }}
-                        defaultValue={content}
-                    />
-                </InputContainer2>
-                <ButtonContainer>
-                    {id === undefined ? (
-                        <Button onClick={handleCreateSchedule}>입력하기</Button>
-                    ) : (
-                        <Button onClick={handleUpdateScedule}>수정하기</Button>
-                    )}
-                    <Link to="/">
-                        <Button>돌아가기</Button>
-                    </Link>
-                </ButtonContainer>
-            </InputContainers>
+            {isLoading ? (
+                <p>Loading...</p>
+            ) : (
+                <InputContainers>
+                    <InputContainer1>
+                        <Text>제목</Text>
+                        <Input
+                            onKeyUp={(e) => {
+                                handleTitle(e.target.value);
+                            }}
+                            defaultValue={title}
+                        />
+                    </InputContainer1>
+                    <InputContainer2>
+                        <Text>일정</Text>
+                        <Input
+                            onKeyUp={(e) => {
+                                handleTodo(e.target.value);
+                            }}
+                            defaultValue={content}
+                        />
+                    </InputContainer2>
+                    <ButtonContainer>
+                        {id === undefined ? (
+                            <Button onClick={handleCreateSchedule}>
+                                입력하기
+                            </Button>
+                        ) : (
+                            <Button onClick={handleUpdateScedule}>
+                                수정하기
+                            </Button>
+                        )}
+                        <Link to="/">
+                            <Button>돌아가기</Button>
+                        </Link>
+                    </ButtonContainer>
+                </InputContainers>
+            )}
         </MainPage>
     );
 }
