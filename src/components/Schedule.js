@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
@@ -20,6 +20,14 @@ const Name = styled.span`
     margin-left: 20px;
     font-size: 1.5em;
     flex-basis: 6em;
+    text-decoration: ${(props) => (props.isChecked ? "line-through" : null)};
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.6rem;
+    @media screen and (max-width: 820px) {
+        display: none;
+    }
 `;
 
 const Todo = styled.span`
@@ -27,6 +35,14 @@ const Todo = styled.span`
     margin-left: 20px;
     font-size: 1.5em;
     flex-basis: 31em;
+    text-decoration: ${(props) => (props.isChecked ? "line-through" : null)};
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @media screen and (max-width: 820px) {
+        font-size: 140%;
+    }
 `;
 const Button = styled.span`
     cursor: default;
@@ -37,17 +53,24 @@ export default function Schedule({ id, name, todo }) {
     const moveToUpdate = () => {
         navigate(`/input/${id}`);
     };
+    const [isChecked, setIsChecked] = useState(false);
+    const handleChecked = () => {
+        setIsChecked((prev) => !prev);
+    };
     const handleDeleteSchedule = () => {
         fetch(`${process.env.REACT_APP_SERVER}/api/todo/${id}`, {
             method: "DELETE",
         }).then(() => window.location.reload("/"));
     };
-    // console.log(id);
     return (
         <Li>
-            <Checkbox type={"checkbox"} />
-            <Name onClick={moveToUpdate}>{name}</Name>
-            <Todo onClick={moveToUpdate}>{todo}</Todo>
+            <Checkbox type={"checkbox"} onChange={handleChecked} />
+            <Name onClick={moveToUpdate} isChecked={isChecked}>
+                {name}
+            </Name>
+            <Todo onClick={moveToUpdate} isChecked={isChecked}>
+                {todo}
+            </Todo>
             <Button onClick={handleDeleteSchedule}>X</Button>
         </Li>
     );
