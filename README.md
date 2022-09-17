@@ -40,6 +40,7 @@
 1. App
 
 -   페이지 이동시 state가 초기화 되는 것을 방지하기 위하여 체크된 항목의 id를 담은 배열과 전체 todolist의 데이터를 담은 배열을 App.js의 state로 배치하였습니다.
+-   Delete 요청을 했을 때 컴포넌트의 변경사항을 반영하기 위하여 useEffect의 의존성 배열에 checkedArr를 추가하였습니다.
 
 2. TodoList
 
@@ -53,6 +54,7 @@
 -   체크박스의 체크 여부를 결정하는 isChecked state의 기본 값을 props의 checked 항목으로 설정하였습니다.
 -   체크박스를 체크했을 때 checkedArr에 해당 Schedule의 id값이 중복으로 입력되지 않도록 filter 메소드를 적용한 handleChecked 함수를 제작하였습니다.
 -   X 버튼을 눌렀을 때 Delete 요청이 갈 수 있도록 handleDeleteSchedule 함수를 제작하였습니다.
+-   Delete 요청을 했을 때 checkedArr state가 재평가되어서 TodoList 컴포넌트에 데이터 변경사항이 반영될 수 있도록 설계하였습니다.
 
 4. InputPage
 
