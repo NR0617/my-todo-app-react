@@ -69,8 +69,10 @@ function InputPage({ todoList, setTodoList }) {
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
+        if (id === undefined) return;
+        setIsLoading(true);
         fetch(`${process.env.REACT_APP_SERVER}/api/todo/${id}`)
             .then((res) => res.json())
             .then((res) => {
@@ -78,25 +80,33 @@ function InputPage({ todoList, setTodoList }) {
                 setContent(res.content);
             })
             .then(() => setIsLoading(false));
-    }, []);
+    }, [id]);
 
     const newSchedule = {
         updatedAt: new Date().toLocaleDateString(),
         checked: "false",
     };
 
-    const handleTitle = function (title) {
+    const handleTitle = function (titleValue) {
+        setTitle(titleValue.trim());
         newSchedule.title = title;
     };
-    const handleTodo = function (todo) {
-        newSchedule.content = todo;
+    const handleTodo = function (contentValue) {
+        setContent(contentValue.trim());
+        newSchedule.content = content;
     };
     const handleCreateSchedule = function () {
+        newSchedule.title = title;
+        newSchedule.content = content;
+
         if (
             newSchedule.title === undefined ||
-            newSchedule.content === undefined
+            newSchedule.content === undefined ||
+            newSchedule.title.trim().length === 0 ||
+            newSchedule.content.trim().length === 0
         ) {
             alert("내용을 입력해주세요");
+
             return null;
         }
         fetch(`${process.env.REACT_APP_SERVER}/api/todo`, {
@@ -109,6 +119,17 @@ function InputPage({ todoList, setTodoList }) {
             .then(() => navigate("/"));
     };
     const handleUpdateScedule = function () {
+        newSchedule.title = title;
+        newSchedule.content = content;
+
+        if (
+            newSchedule.title.trim().length === 0 &&
+            newSchedule.content.trim().length === 0
+        ) {
+            alert("내용을 입력해주세요");
+            return;
+        }
+
         fetch(`${process.env.REACT_APP_SERVER}/api/todo/${id}`, {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newSchedule),
