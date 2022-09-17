@@ -1,7 +1,7 @@
-import React from "react";
-import Schedule from "../components/Schedule";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import React from 'react';
+import Schedule from '../components/Schedule';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const MainPage = styled.div`
     display: flex;

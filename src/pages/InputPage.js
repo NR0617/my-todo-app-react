@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
 const MainPage = styled.div`
     display: flex;
@@ -67,8 +67,8 @@ const ButtonContainer = styled.div`
 function InputPage({ todoList, setTodoList }) {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
         if (id === undefined) return;
@@ -84,7 +84,7 @@ function InputPage({ todoList, setTodoList }) {
 
     const newSchedule = {
         updatedAt: new Date().toLocaleDateString(),
-        checked: "false",
+        checked: 'false',
     };
 
     const handleTitle = function (titleValue) {
@@ -99,41 +99,32 @@ function InputPage({ todoList, setTodoList }) {
         newSchedule.title = title;
         newSchedule.content = content;
 
-        if (
-            newSchedule.title === undefined ||
-            newSchedule.content === undefined ||
-            newSchedule.title.trim().length === 0 ||
-            newSchedule.content.trim().length === 0
-        ) {
-            alert("내용을 입력해주세요");
-
-            return null;
+        if (newSchedule.title.trim().length === 0 || newSchedule.content.trim().length === 0) {
+            alert('내용을 입력해주세요');
+            return;
         }
         fetch(`${process.env.REACT_APP_SERVER}/api/todo`, {
-            headers: { "Content-Type": "application/json" },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newSchedule),
-            method: "POST",
+            method: 'POST',
         })
             .then((res) => res.json())
             .then((res) => setTodoList((prev) => [...prev, res]))
-            .then(() => navigate("/"));
+            .then(() => navigate('/'));
     };
     const handleUpdateScedule = function () {
         newSchedule.title = title;
         newSchedule.content = content;
 
-        if (
-            newSchedule.title.trim().length === 0 ||
-            newSchedule.content.trim().length === 0
-        ) {
-            alert("내용을 입력해주세요!");
+        if (newSchedule.title.trim().length === 0 || newSchedule.content.trim().length === 0) {
+            alert('내용을 입력해주세요!');
             return;
         }
 
         fetch(`${process.env.REACT_APP_SERVER}/api/todo/${id}`, {
-            headers: { "Content-Type": "application/json" },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newSchedule),
-            method: "PATCH",
+            method: 'PATCH',
         })
             .then((res) => res.json())
             .then((res) => {
@@ -141,7 +132,7 @@ function InputPage({ todoList, setTodoList }) {
                 const afterItem = todoList.filter((el) => el.id > res.id);
                 setTodoList([...beforeItem, res, ...afterItem]);
             })
-            .then(() => navigate("/"));
+            .then(() => navigate('/'));
     };
 
     return (
@@ -170,13 +161,9 @@ function InputPage({ todoList, setTodoList }) {
                     </InputContainer2>
                     <ButtonContainer>
                         {id === undefined ? (
-                            <Button onClick={handleCreateSchedule}>
-                                입력하기
-                            </Button>
+                            <Button onClick={handleCreateSchedule}>입력하기</Button>
                         ) : (
-                            <Button onClick={handleUpdateScedule}>
-                                수정하기
-                            </Button>
+                            <Button onClick={handleUpdateScedule}>수정하기</Button>
                         )}
                         <Link to="/">
                             <Button>돌아가기</Button>

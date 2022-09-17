@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Li = styled.li`
     border-bottom: 1px solid #8fa8ff;
@@ -20,7 +20,7 @@ const Name = styled.span`
     margin-left: 20px;
     font-size: 1.5em;
     flex-basis: 6em;
-    text-decoration: ${(props) => (props.isChecked ? "line-through" : null)};
+    text-decoration: ${(props) => (props.isChecked ? 'line-through' : null)};
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -34,7 +34,7 @@ const Todo = styled.span`
     margin-left: 20px;
     font-size: 1.5em;
     flex-basis: 31em;
-    text-decoration: ${(props) => (props.isChecked ? "line-through" : null)};
+    text-decoration: ${(props) => (props.isChecked ? 'line-through' : null)};
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -51,14 +51,7 @@ const Button = styled.span`
     flex-basis: 3rem;
 `;
 
-export default function Schedule({
-    id,
-    name,
-    todo,
-    setCheckedArr,
-    checkedArr,
-    checked,
-}) {
+export default function Schedule({ id, name, todo, setCheckedArr, checkedArr, checked }) {
     const navigate = useNavigate();
     const moveToUpdate = () => {
         navigate(`/input/${id}`);
@@ -75,16 +68,12 @@ export default function Schedule({
     };
     const handleDeleteSchedule = () => {
         fetch(`${process.env.REACT_APP_SERVER}/api/todo/${id}`, {
-            method: "DELETE",
+            method: 'DELETE',
         }).then(() => setCheckedArr((prev) => [...prev]));
     };
     return (
         <Li>
-            <Checkbox
-                type={"checkbox"}
-                onChange={handleChecked}
-                checked={isChecked}
-            />
+            <Checkbox type={'checkbox'} onChange={handleChecked} checked={isChecked} />
             <Name onClick={moveToUpdate} isChecked={isChecked}>
                 {name}
             </Name>

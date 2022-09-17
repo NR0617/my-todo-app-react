@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+# 프로젝트 계획이유
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> 이 프로젝트는 React의 기본적인 기능을 이해하고 적용하는 연습을 하기 위해서 계획되었습니다.
+> 게시물을 읽고 작성하고 수정하고 삭제하는 기본적인 기능을 갖추면서 React가 가지고 있는 컴포넌트 재사용, 컴포넌트의 라이프사이클을 이용할 수 있는 프로젝트를 하기 위해 todo list 프로젝트를 선택했습니다.
+> 라우터 기능을 사용하기 위해서 페이지를 분리하였고 입력 폼은 유효성 검사를 할 수 있도록 만들었습니다.
+> 또한 연습용 임시 서버를 만드는 연습을 하기 위해서 json-server를 배포하여 사용하였습니다.
 
-## Available Scripts
+# TODO LIST 기능 설명
 
-In the project directory, you can run:
+1. Read
 
-### `npm start`
+-   해당 어플리케이션은 데이터베이스에 저장되어 있는 정보를 읽어와서 메인 화면에 리스트의 형태로 보여줍니다.
+-   메인페이지 게시물의 제목 또는 내용을 클릭하면 해당 정보를 수정하는 페이지에서 세부내용을 읽을 수 있습니다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. Create
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+-   어플리케이션의 메인페이지 하단에 있는 + 버튼을 클릭하면 게시물 작성 페이지로 이동합니다.
+-   게시물 작성페이지에서 글자를 입력하지 않을 경우 리스트에 추가되지 않습니다.
 
-### `npm test`
+3. Update
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+-   어플리케이션의 메인페이지 게시물의 제목 또는 내용을 클릭하면 해당 정보를 수정하는 페이지로 이동합니다.
+-   수정하는 페이지에서 글자를 입력하지 않을 경우 게시물이 변경되지 않습니다.
+-   어플리케이션 게시물의 왼쪽 체크박스를 체크하면 게시물 내용에 가운데 줄이 생깁니다.
 
-### `npm run build`
+4. Delete
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+-   어플리케이션 게시물의 오른쪽 끝에 있는 X 버튼을 클릭하면 해당 게시물이 삭제됩니다.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# 어플리케이션의 구조와 설계
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+> 구조
+> APP
+> |----TodoList----Schedule
+> |----InputPage
 
-### `npm run eject`
+> 설계
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. App
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+-   페이지 이동시 state가 초기화 되는 것을 방지하기 위하여 체크된 항목의 id를 담은 배열과 전체 todolist의 데이터를 담은 배열을 App.js의 state로 배치하였습니다.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. TodoList
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+-   체크박스의 체크 여부를 리스트의 변동과 관계없이 동일하게 유지하기 위하여 하위 컴포넌트에 props로 보내주었습니다.
+-   하위 컴토넌트에서 props로 사용하기 편하도록 id, name, todo를 별개의 props로 보내주었습니다.
+-   하위 컴포넌트에서 checkedArr의 id 중복 입력을 방지하기 위해 checkedArr를 props로 보내주었습니다.
 
-## Learn More
+3. Schedule
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+-   단일 Schedule의 제목 또는 내용을 클릭할 때 수정 페이지로 이동하도록 moveToUpdate 함수를 제작하였습니다.
+-   체크박스의 체크 여부를 결정하는 isChecked state의 기본 값을 props의 checked 항목으로 설정하였습니다.
+-   체크박스를 체크했을 때 checkedArr에 해당 Schedule의 id값이 중복으로 입력되지 않도록 filter 메소드를 적용한 handleChecked 함수를 제작하였습니다.
+-   X 버튼을 눌렀을 때 Delete 요청이 갈 수 있도록 handleDeleteSchedule 함수를 제작하였습니다.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+4. InputPage
 
-### Code Splitting
+    - 입력폼에 글자가 없을 경우 입력하기 또는 수정하기 버튼을 클릭하면 경고창이 보이도록 제작하였습니다.
+    - 입력폼에 글자가 입력될 경우 해당 글자를 title, content에 state로 저장되도록 함수를 제작하였습니다.
+    - 입력하기 또는 수정하기가 성공하거나 돌아가기 버튼을 누르면 메인페이지로 이동하도록 제작하였습니다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+-   id 파라미터가 없을 경우
+    -   입력하기 버튼을 클릭하면 post 요청이 가도록 handleCreateSchedule 함수를 제작하였습니다.
+    -   입력이 완료되면 TodoList 배열의 마지막에 response의 데이터가 추가되도록 제작하였습니다.
+-   id 파라미터가 있을 경우
+    -   update 페이지이므로 해당 id에 저장되어 있던 정보가 입력 폼에서 보이게 제작하였습니다.
+    -   수정하기 버튼을 클릭하면 Patch 요청이 갈 수 있도록 handleUpdateScedule 함수를 제작하였습니다.
+    -   수정이 완료되면 TodoList 배열에서 해당 요소가 원래 위치해있던 인덱스에 동일하게 위치할 수 있도록 함수를 제작하였습니다.
 
-### Analyzing the Bundle Size
+# 기타 추가한 사항
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1.  CSS가 한눈에 보일 수 있도록 StyledComponent를 사용하였습니다.
+2.  페이지의 양식을 자동으로 일치시킬 수 있도록 prettierrc를 적용하였습니다.
