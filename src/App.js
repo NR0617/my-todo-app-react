@@ -13,7 +13,7 @@ function App() {
         fetch(`${process.env.REACT_APP_SERVER}/api/todo`)
             .then((res) => res.json())
             .then((data) => setTodoList(data));
-    }, []);
+    }, [checkedArr]);
 
     return (
         <Router>
