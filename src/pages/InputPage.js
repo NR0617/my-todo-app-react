@@ -123,7 +123,7 @@ function InputPage({ todoList, setTodoList }) {
         newSchedule.content = content;
 
         if (
-            newSchedule.title.trim().length === 0 &&
+            newSchedule.title.trim().length === 0 ||
             newSchedule.content.trim().length === 0
         ) {
             alert("내용을 입력해주세요");
