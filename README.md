@@ -30,8 +30,8 @@
 # 어플리케이션의 구조와 설계
 
 > 구조
-> APP
-> |----TodoList----Schedule
+> APP  
+> |----TodoList----Schedule  
 > |----InputPage
 
 > 설계
